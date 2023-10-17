@@ -37,6 +37,17 @@ ggplot(data=sensordata[sensordata$`Day Type`!="None",],aes(x=Time,y=infectionris
   theme(axis.text.x=element_text(angle=90),axis.title = element_text(size=13),
         axis.text=element_text(size=13))
 
+summary(sensordata$infectionrisk[sensordata$Month=="April" & sensordata$`Day Type`=="Anchor"])
+sd(sensordata$infectionrisk[sensordata$Month=="April" & sensordata$`Day Type`=="Anchor"])
+summary(sensordata$infectionrisk[sensordata$Month=="April" & sensordata$`Day Type`=="Hybrid"])
+sd(sensordata$infectionrisk[sensordata$Month=="April" & sensordata$`Day Type`=="Hybrid" & !is.na(sensordata$infectionrisk)])
+
+
+summary(sensordata$infectionrisk[sensordata$Month=="August" & sensordata$`Day Type`=="Anchor"])
+sd(sensordata$infectionrisk[sensordata$Month=="August" & sensordata$`Day Type`=="Anchor"])
+summary(sensordata$infectionrisk[sensordata$Month=="August" & sensordata$`Day Type`=="Hybrid"])
+sd(sensordata$infectionrisk[sensordata$Month=="August" & sensordata$`Day Type`=="Hybrid"])
+
 #-----------------Infection Risk assuming same prevalence (ratio of infected person to occupancy)-----------
 
 #assumed prevalence: 20% (1/5)
@@ -44,10 +55,8 @@ ggplot(data=sensordata[sensordata$`Day Type`!="None",],aes(x=Time,y=infectionris
 I<-1
 n<-5
 
-sensordata$infectionrisk2<-1-exp(-sensordata$f*I*q*t/n)
-
 #calculating infection risk with Rudnick & Milton equation #8
-sensordata$infectionrisk<-1-exp(-sensordata$f*I*q*t/sensordata$n)
+sensordata$infectionrisk2<-1-exp(-sensordata$f*I*q*t/n)
 
 require(ggplot2)
 require(ggpubr)
@@ -63,3 +72,77 @@ ggplot(data=sensordata[sensordata$`Day Type`!="None",],aes(x=Time,y=infectionris
   annotate("rect",xmin=sensordata$Time[29],xmax=sensordata$Time[53],ymin=0.005,ymax=0.02,alpha=.1,fill="blue")+
   theme(axis.text.x=element_text(angle=90),axis.title = element_text(size=13),
         axis.text=element_text(size=13))
+
+summary(sensordata$infectionrisk2[sensordata$Month=="April" & sensordata$`Day Type`=="Anchor"])
+sd(sensordata$infectionrisk2[sensordata$Month=="April" & sensordata$`Day Type`=="Anchor"])
+summary(sensordata$infectionrisk2[sensordata$Month=="April" & sensordata$`Day Type`=="Hybrid"])
+sd(sensordata$infectionrisk2[sensordata$Month=="April" & sensordata$`Day Type`=="Hybrid" & !is.na(sensordata$infectionrisk2)])
+
+summary(sensordata$infectionrisk2[sensordata$Month=="August" & sensordata$`Day Type`=="Anchor"])
+sd(sensordata$infectionrisk2[sensordata$Month=="August" & sensordata$`Day Type`=="Anchor"])
+summary(sensordata$infectionrisk2[sensordata$Month=="August" & sensordata$`Day Type`=="Hybrid"])
+sd(sensordata$infectionrisk2[sensordata$Month=="August" & sensordata$`Day Type`=="Hybrid" & !is.na(sensordata$infectionrisk2)])
+
+#summary statistics of f----------------------------------------
+
+summary(sensordata$f[sensordata$Month=="August" & sensordata$`Day Type`=="Anchor"])
+summary(sensordata$f[sensordata$Month=="August" & sensordata$`Day Type`=="Hybrid"])
+
+summary(sensordata$f[sensordata$Month=="April" & sensordata$`Day Type`=="Anchor"])
+summary(sensordata$f[sensordata$Month=="April" & sensordata$`Day Type`=="Hybrid"])
+
+#What would CO2 be if we assumed 1 ACH------------------------------
+anchor<-1141 #(50 people)
+peopleanchor<-50
+hybrid<-444 #(3 people)
+peoplehybrid<-3
+
+#used: https://forhealth.org/tools/co2-calculator/
+
+#calculating f (from Rudnick & Milton) per time point per sensor
+anchorf<-(anchor-C.0)/1000000/C.a
+hybridf<-(hybrid-C.0)/1000000/C.a
+
+
+anchorrisk<-1-exp(-anchorf*I*q*t/peopleanchor)
+hybridrisk<-1-exp(-hybridf*I*q*t/peoplehybrid)
+
+anchorrisk-hybridrisk
+
+#Statistical models
+
+maxs<-rep(NA,length(table(sensordata$Day)))
+means<-rep(NA,length(table(sensordata$Day)))
+month<-rep(NA,length(table(sensordata$Day)))
+ntotal<-rep(NA,length(table(sensordata$Day)))
+  
+days<-unique(sensordata$Day)
+
+for (i in 1:length(maxs)){
+  maxs[i]<-max(sensordata$`Sensor 2 CO2`[sensordata$Day==days[i]])
+  means[i]<-mean(sensordata$`Sensor 2 CO2`[sensordata$Day==days[i]])
+  month[i]<-sensordata$Month[sensordata$Day==days[i]][1]
+  ntotal[i]<-sensordata$n[sensordata$Day==days[i]][1]
+}
+
+frame.all<-data.frame(maxs,means,month,ntotal)
+  
+sensormodel1<-lm(means~month + ntotal,frame.all)
+summary(sensormodel1)
+
+windows()
+ggplot(frame.all,aes(x=month,y=means))+
+  geom_point()+
+  stat_smooth(method = "lm", 
+              formula = y ~ x, 
+              geom = "smooth") 
+
+
+sensormodel2<-lm(maxs~month + ntotal,frame.all)
+summary(sensormodel2)
+
+library(readr)
+occupancy_data <- read_csv("occupancy data.csv")
+
+occupancymodel<-lm(n~Month + `Day Type`,occupancy_data)
+summary(occupancymodel)
