@@ -46,7 +46,7 @@ n<-5
 
 sensordata$infectionrisk2<-1-exp(-sensordata$f*I*q*t/n)
 
-#calculating infectin risk with Rudnick & Milton equation #8
+#calculating infection risk with Rudnick & Milton equation #8
 sensordata$infectionrisk<-1-exp(-sensordata$f*I*q*t/sensordata$n)
 
 require(ggplot2)
