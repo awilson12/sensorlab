@@ -1,6 +1,6 @@
 library(readxl)
 
-sensordata<- read_excel("sensor_data_combined_risk_v3.xlsx")
+sensordata<- read_excel("sensor_data_combined_risk_v5_final.xlsx")
 
 #-----------Setting Parameters-------------------------------------------------------------------
 
@@ -37,16 +37,26 @@ ggplot(data=sensordata[sensordata$`Day Type`!="None",],aes(x=Time,y=infectionris
   theme(axis.text.x=element_text(angle=90),axis.title = element_text(size=13),
         axis.text=element_text(size=13))
 
-summary(sensordata$infectionrisk[sensordata$Month=="April" & sensordata$`Day Type`=="Anchor"])
-sd(sensordata$infectionrisk[sensordata$Month=="April" & sensordata$`Day Type`=="Anchor"])
-summary(sensordata$infectionrisk[sensordata$Month=="April" & sensordata$`Day Type`=="Hybrid"])
-sd(sensordata$infectionrisk[sensordata$Month=="April" & sensordata$`Day Type`=="Hybrid" & !is.na(sensordata$infectionrisk)])
+summary(sensordata$infectionrisk[sensordata$Month=="Spring" & sensordata$`Day Type`=="Anchor"])
+sd(sensordata$infectionrisk[sensordata$Month=="Spring" & sensordata$`Day Type`=="Anchor"])
+summary(sensordata$infectionrisk[sensordata$Month=="Spring" & sensordata$`Day Type`=="Hybrid"])
+sd(sensordata$infectionrisk[sensordata$Month=="Spring" & sensordata$`Day Type`=="Hybrid" & !is.na(sensordata$infectionrisk)])
 
 
-summary(sensordata$infectionrisk[sensordata$Month=="August" & sensordata$`Day Type`=="Anchor"])
-sd(sensordata$infectionrisk[sensordata$Month=="August" & sensordata$`Day Type`=="Anchor"])
-summary(sensordata$infectionrisk[sensordata$Month=="August" & sensordata$`Day Type`=="Hybrid"])
-sd(sensordata$infectionrisk[sensordata$Month=="August" & sensordata$`Day Type`=="Hybrid"])
+summary(sensordata$infectionrisk[sensordata$Month=="Summer" & sensordata$`Day Type`=="Anchor"])
+sd(sensordata$infectionrisk[sensordata$Month=="Summer" & sensordata$`Day Type`=="Anchor"])
+summary(sensordata$infectionrisk[sensordata$Month=="Summer" & sensordata$`Day Type`=="Hybrid"])
+sd(sensordata$infectionrisk[sensordata$Month=="Summer" & sensordata$`Day Type`=="Hybrid"])
+
+summary(sensordata$infectionrisk[sensordata$Month=="Fall" & sensordata$`Day Type`=="Anchor"])
+sd(sensordata$infectionrisk[sensordata$Month=="Fall" & sensordata$`Day Type`=="Anchor"])
+summary(sensordata$infectionrisk[sensordata$Month=="Fall" & sensordata$`Day Type`=="Hybrid"])
+sd(sensordata$infectionrisk[sensordata$Month=="Fall" & sensordata$`Day Type`=="Hybrid"])
+
+summary(sensordata$infectionrisk[sensordata$Month=="Winter" & sensordata$`Day Type`=="Anchor"])
+sd(sensordata$infectionrisk[sensordata$Month=="Winter" & sensordata$`Day Type`=="Anchor"])
+summary(sensordata$infectionrisk[sensordata$Month=="Winter" & sensordata$`Day Type`=="Hybrid"])
+sd(sensordata$infectionrisk[sensordata$Month=="Winter" & sensordata$`Day Type`=="Hybrid"])
 
 #-----------------Infection Risk assuming same prevalence (ratio of infected person to occupancy)-----------
 
@@ -73,23 +83,40 @@ ggplot(data=sensordata[sensordata$`Day Type`!="None",],aes(x=Time,y=infectionris
   theme(axis.text.x=element_text(angle=90),axis.title = element_text(size=13),
         axis.text=element_text(size=13))
 
-summary(sensordata$infectionrisk2[sensordata$Month=="April" & sensordata$`Day Type`=="Anchor"])
-sd(sensordata$infectionrisk2[sensordata$Month=="April" & sensordata$`Day Type`=="Anchor"])
-summary(sensordata$infectionrisk2[sensordata$Month=="April" & sensordata$`Day Type`=="Hybrid"])
-sd(sensordata$infectionrisk2[sensordata$Month=="April" & sensordata$`Day Type`=="Hybrid" & !is.na(sensordata$infectionrisk2)])
+summary(sensordata$infectionrisk2[sensordata$Month=="Spring" & sensordata$`Day Type`=="Anchor"])
+sd(sensordata$infectionrisk2[sensordata$Month=="Spring" & sensordata$`Day Type`=="Anchor"])
+summary(sensordata$infectionrisk2[sensordata$Month=="Spring" & sensordata$`Day Type`=="Hybrid"])
+sd(sensordata$infectionrisk2[sensordata$Month=="Spring" & sensordata$`Day Type`=="Hybrid" & !is.na(sensordata$infectionrisk2)])
 
-summary(sensordata$infectionrisk2[sensordata$Month=="August" & sensordata$`Day Type`=="Anchor"])
-sd(sensordata$infectionrisk2[sensordata$Month=="August" & sensordata$`Day Type`=="Anchor"])
-summary(sensordata$infectionrisk2[sensordata$Month=="August" & sensordata$`Day Type`=="Hybrid"])
-sd(sensordata$infectionrisk2[sensordata$Month=="August" & sensordata$`Day Type`=="Hybrid" & !is.na(sensordata$infectionrisk2)])
+summary(sensordata$infectionrisk2[sensordata$Month=="Fall" & sensordata$`Day Type`=="Anchor"])
+sd(sensordata$infectionrisk2[sensordata$Month=="Fall" & sensordata$`Day Type`=="Anchor"])
+summary(sensordata$infectionrisk2[sensordata$Month=="Fall" & sensordata$`Day Type`=="Hybrid"])
+sd(sensordata$infectionrisk2[sensordata$Month=="Fall" & sensordata$`Day Type`=="Hybrid" & !is.na(sensordata$infectionrisk2)])
+
+summary(sensordata$infectionrisk2[sensordata$Month=="Summer" & sensordata$`Day Type`=="Anchor"])
+sd(sensordata$infectionrisk2[sensordata$Month=="Summer" & sensordata$`Day Type`=="Anchor"])
+summary(sensordata$infectionrisk2[sensordata$Month=="Summer" & sensordata$`Day Type`=="Hybrid"])
+sd(sensordata$infectionrisk2[sensordata$Month=="Summer" & sensordata$`Day Type`=="Hybrid" & !is.na(sensordata$infectionrisk2)])
+
+summary(sensordata$infectionrisk2[sensordata$Month=="Winter" & sensordata$`Day Type`=="Anchor"])
+sd(sensordata$infectionrisk2[sensordata$Month=="Winter" & sensordata$`Day Type`=="Anchor"])
+summary(sensordata$infectionrisk2[sensordata$Month=="Winter" & sensordata$`Day Type`=="Hybrid"])
+sd(sensordata$infectionrisk2[sensordata$Month=="Winter" & sensordata$`Day Type`=="Hybrid" & !is.na(sensordata$infectionrisk2)])
+
 
 #summary statistics of f----------------------------------------
 
-summary(sensordata$f[sensordata$Month=="August" & sensordata$`Day Type`=="Anchor"])
-summary(sensordata$f[sensordata$Month=="August" & sensordata$`Day Type`=="Hybrid"])
+summary(sensordata$f[sensordata$Month=="Summer" & sensordata$`Day Type`=="Anchor"])
+summary(sensordata$f[sensordata$Month=="Summer" & sensordata$`Day Type`=="Hybrid"])
 
-summary(sensordata$f[sensordata$Month=="April" & sensordata$`Day Type`=="Anchor"])
-summary(sensordata$f[sensordata$Month=="April" & sensordata$`Day Type`=="Hybrid"])
+summary(sensordata$f[sensordata$Month=="Spring" & sensordata$`Day Type`=="Anchor"])
+summary(sensordata$f[sensordata$Month=="Spring" & sensordata$`Day Type`=="Hybrid"])
+
+summary(sensordata$f[sensordata$Month=="Winter" & sensordata$`Day Type`=="Anchor"])
+summary(sensordata$f[sensordata$Month=="Winter" & sensordata$`Day Type`=="Hybrid"])
+
+summary(sensordata$f[sensordata$Month=="Fall" & sensordata$`Day Type`=="Anchor"])
+summary(sensordata$f[sensordata$Month=="Fall" & sensordata$`Day Type`=="Hybrid"])
 
 #What would CO2 be if we assumed 1 ACH------------------------------
 anchor<-1141 #(50 people)
@@ -142,7 +169,7 @@ sensormodel2<-lm(maxs~month + ntotal,frame.all)
 summary(sensormodel2)
 
 library(readr)
-occupancy_data <- read_csv("occupancy data.csv")
+occupancy_data <- read_csv("occupancy data.csv") #NEED TO UPDATE WITH OCT/FEB DATA
 
 occupancymodel<-lm(n~Month + `Day Type`,occupancy_data)
 summary(occupancymodel)
