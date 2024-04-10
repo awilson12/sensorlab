@@ -17,10 +17,37 @@ sensordata$f.2<-(as.numeric(sensordata$`Sensor 2 CO2`)-C.0)/1000000/C.a
 #averaging f across the two sensors with equation #3
 sensordata$f<-sensordata$f.1+sensordata$f.2/2
 
-#----------------------Infection Risk assuming 1 Infected Person in Total Occupancy----------------------
+summary(sensordata$f)
+
+timeweighted.f<-rep(NA,(length(table(sensordata$Day))))
+occupancy<-rep(NA,(length(table(sensordata$Day))))
+
+days<-unique(sensordata$Day)
+type<-c(rep(c("Hybrid", "Anchor", "Anchor", "Hybrid"),1),rep(c("Hybrid","Anchor","Anchor","Hybrid","Hybrid"),3))
+season<-c(rep("Spring",4),rep("Summer",5),rep("Fall",5),rep("Winter",5))
+
+for(i in 1:length(table(sensordata$Day))){
+  timeweighted.f[i]<-sum(sensordata$f[sensordata$Day==days[i]]*5)/470
+  occupancy[i]<-sensordata$n[sensordata$Day==days[i]][1]
+}
+
+frame.weighted<-data.frame(timeweighted.f,days,type,season,occupancy)
+
+#Assuming 1 person in occupancy is infected
+frame.weighted$infectionrisk<-1-exp(-frame.weighted$timeweighted.f*I*q*t/frame.weighted$occupancy)
+
+A<-ggplot(frame.weighted)+geom_boxplot(aes(x=type,y=infectionrisk,fill=season))+
+  scale_y_continuous(name="Case 1 Infection Risk")+
+  scale_x_discrete(name="")+
+  scale_fill_discrete(name="")+
+  facet_wrap(~season)+
+  theme_pubclean()+
+  ggtitle('A')+
+  theme(axis.text = element_text(size=13),strip.text = element_text(size=13),
+        axis.title = element_text(size=13),legend.text=element_text(size=13))
 
 #calculating infection risk with Rudnick & Milton equation #8
-sensordata$infectionrisk<-1-exp(-sensordata$f*I*q*t/sensordata$n)
+#sensordata$infectionrisk<-1-exp(-sensordata$f*I*q*t/sensordata$n)
 
 require(ggplot2)
 require(ggpubr)
@@ -28,115 +55,80 @@ require(ggpubr)
 startlunch<-as.POSIXct("1899-12-31 11:30:00")
 endlunch<-as.POSIXct("1899-12-31 1:30:00")
 
-ggplot(data=sensordata[sensordata$`Day Type`!="None",],aes(x=Time,y=infectionrisk,group=Day,color=`Day Type`))+geom_point(size=2)+geom_line(size=1)+
+
+#------------------------------------figure 2
+
+windows()
+ggplot(data=sensordata[sensordata$`Day Type`!="None",],aes(x=Time,y=sensordata$co2average,group=Day,color=`Day Type`))+geom_point(size=2)+geom_line(size=1)+
   facet_wrap(~Month)+
   scale_x_datetime(name="Time")+
-  scale_y_continuous(name="Infection Risk")+
-  theme_pubr()+
-  annotate("rect",xmin=sensordata$Time[29],xmax=sensordata$Time[53],ymin=0.002,ymax=0.007,alpha=.1,fill="blue")+
+  scale_y_continuous(name=expression("CO"[2]*phantom(x)*"(ppm)"))+
+  scale_color_discrete(name="")+
+  theme_pubclean()+
+  annotate("rect",xmin=sensordata$Time[29],xmax=sensordata$Time[53],ymin=0,ymax=1500,alpha=.1,fill="blue")+
   theme(axis.text.x=element_text(angle=90),axis.title = element_text(size=13),
-        axis.text=element_text(size=13))
-
-summary(sensordata$infectionrisk[sensordata$Month=="Spring" & sensordata$`Day Type`=="Anchor"])
-sd(sensordata$infectionrisk[sensordata$Month=="Spring" & sensordata$`Day Type`=="Anchor"])
-summary(sensordata$infectionrisk[sensordata$Month=="Spring" & sensordata$`Day Type`=="Hybrid"])
-sd(sensordata$infectionrisk[sensordata$Month=="Spring" & sensordata$`Day Type`=="Hybrid" & !is.na(sensordata$infectionrisk)])
+        axis.text=element_text(size=13),strip.text = element_text(size=13))
 
 
-summary(sensordata$infectionrisk[sensordata$Month=="Summer" & sensordata$`Day Type`=="Anchor"])
-sd(sensordata$infectionrisk[sensordata$Month=="Summer" & sensordata$`Day Type`=="Anchor"])
-summary(sensordata$infectionrisk[sensordata$Month=="Summer" & sensordata$`Day Type`=="Hybrid"])
-sd(sensordata$infectionrisk[sensordata$Month=="Summer" & sensordata$`Day Type`=="Hybrid"])
+#--------------Table 1---------------------------------------------------
 
-summary(sensordata$infectionrisk[sensordata$Month=="Fall" & sensordata$`Day Type`=="Anchor"])
-sd(sensordata$infectionrisk[sensordata$Month=="Fall" & sensordata$`Day Type`=="Anchor"])
-summary(sensordata$infectionrisk[sensordata$Month=="Fall" & sensordata$`Day Type`=="Hybrid"])
-sd(sensordata$infectionrisk[sensordata$Month=="Fall" & sensordata$`Day Type`=="Hybrid"])
+library(Metrics)
+rmse(sensordata$`Sensor 1 CO2`,sensordata$`Sensor 2 CO2`)
 
-summary(sensordata$infectionrisk[sensordata$Month=="Winter" & sensordata$`Day Type`=="Anchor"])
-sd(sensordata$infectionrisk[sensordata$Month=="Winter" & sensordata$`Day Type`=="Anchor"])
-summary(sensordata$infectionrisk[sensordata$Month=="Winter" & sensordata$`Day Type`=="Hybrid"])
-sd(sensordata$infectionrisk[sensordata$Month=="Winter" & sensordata$`Day Type`=="Hybrid"])
+sensordata$co2average<-(sensordata$`Sensor 1 CO2`+sensordata$`Sensor 2 CO2`)/2
 
-#-----------------Infection Risk assuming same prevalence (ratio of infected person to occupancy)-----------
+summary(sensordata$co2average[sensordata$Month=="Spring" & sensordata$`Day Type`=="Hybrid"])
+sd(sensordata$co2average[sensordata$Month=="Spring" & sensordata$`Day Type`=="Hybrid"])
 
-#assumed prevalence: 20% (1/5)
+summary(sensordata$co2average[sensordata$Month=="Spring" & sensordata$`Day Type`=="Anchor"])
+sd(sensordata$co2average[sensordata$Month=="Spring" & sensordata$`Day Type`=="Anchor"])
+
+
+summary(sensordata$co2average[sensordata$Month=="Summer" & sensordata$`Day Type`=="Hybrid"])
+sd(sensordata$co2average[sensordata$Month=="Summer" & sensordata$`Day Type`=="Hybrid"])
+
+summary(sensordata$co2average[sensordata$Month=="Summer" & sensordata$`Day Type`=="Anchor"])
+sd(sensordata$co2average[sensordata$Month=="Summer" & sensordata$`Day Type`=="Anchor"])
+
+
+summary(sensordata$co2average[sensordata$Month=="Fall" & sensordata$`Day Type`=="Hybrid"])
+sd(sensordata$co2average[sensordata$Month=="Fall" & sensordata$`Day Type`=="Hybrid"])
+
+summary(sensordata$co2average[sensordata$Month=="Fall" & sensordata$`Day Type`=="Anchor"])
+sd(sensordata$co2average[sensordata$Month=="Fall" & sensordata$`Day Type`=="Anchor"])
+
+
+
+summary(sensordata$co2average[sensordata$Month=="Winter" & sensordata$`Day Type`=="Hybrid"])
+sd(sensordata$co2average[sensordata$Month=="Winter" & sensordata$`Day Type`=="Hybrid"])
+
+summary(sensordata$co2average[sensordata$Month=="Winter" & sensordata$`Day Type`=="Anchor"])
+sd(sensordata$co2average[sensordata$Month=="Winter" & sensordata$`Day Type`=="Anchor"])
+
+
+#assumed prevalence: 20% (1/5)---------------------------------------------------------------
 
 I<-1
 n<-5
 
-#calculating infection risk with Rudnick & Milton equation #8
-sensordata$infectionrisk2<-1-exp(-sensordata$f*I*q*t/n)
+frame.weighted$infectionrisk2<-1-exp(-frame.weighted$timeweighted.f*I*q*t/n)
 
-require(ggplot2)
-require(ggpubr)
+B<-ggplot(frame.weighted)+geom_boxplot(aes(x=type,y=infectionrisk2,fill=season))+
+  scale_y_continuous(name="Case 2 Infection Risk")+ 
+  scale_x_discrete(name="")+
+  scale_fill_discrete(name="")+
+  facet_wrap(~season)+
+  theme_pubclean()+
+  ggtitle('B')+
+  theme(axis.text = element_text(size=13),strip.text = element_text(size=13),
+        axis.title = element_text(size=13),legend.text=element_text(size=13))
 
-startlunch<-as.POSIXct("1899-12-31 11:30:00")
-endlunch<-as.POSIXct("1899-12-31 1:30:00")
-
-ggplot(data=sensordata[sensordata$`Day Type`!="None",],aes(x=Time,y=infectionrisk2,group=Day,color=`Day Type`))+geom_point(size=2)+geom_line(size=1)+
-  facet_wrap(~Month)+
-  scale_x_datetime(name="Time")+
-  scale_y_continuous(name="Infection Risk")+
-  theme_pubr()+
-  annotate("rect",xmin=sensordata$Time[29],xmax=sensordata$Time[53],ymin=0.005,ymax=0.02,alpha=.1,fill="blue")+
-  theme(axis.text.x=element_text(angle=90),axis.title = element_text(size=13),
-        axis.text=element_text(size=13))
-
-summary(sensordata$infectionrisk2[sensordata$Month=="Spring" & sensordata$`Day Type`=="Anchor"])
-sd(sensordata$infectionrisk2[sensordata$Month=="Spring" & sensordata$`Day Type`=="Anchor"])
-summary(sensordata$infectionrisk2[sensordata$Month=="Spring" & sensordata$`Day Type`=="Hybrid"])
-sd(sensordata$infectionrisk2[sensordata$Month=="Spring" & sensordata$`Day Type`=="Hybrid" & !is.na(sensordata$infectionrisk2)])
-
-summary(sensordata$infectionrisk2[sensordata$Month=="Fall" & sensordata$`Day Type`=="Anchor"])
-sd(sensordata$infectionrisk2[sensordata$Month=="Fall" & sensordata$`Day Type`=="Anchor"])
-summary(sensordata$infectionrisk2[sensordata$Month=="Fall" & sensordata$`Day Type`=="Hybrid"])
-sd(sensordata$infectionrisk2[sensordata$Month=="Fall" & sensordata$`Day Type`=="Hybrid" & !is.na(sensordata$infectionrisk2)])
-
-summary(sensordata$infectionrisk2[sensordata$Month=="Summer" & sensordata$`Day Type`=="Anchor"])
-sd(sensordata$infectionrisk2[sensordata$Month=="Summer" & sensordata$`Day Type`=="Anchor"])
-summary(sensordata$infectionrisk2[sensordata$Month=="Summer" & sensordata$`Day Type`=="Hybrid"])
-sd(sensordata$infectionrisk2[sensordata$Month=="Summer" & sensordata$`Day Type`=="Hybrid" & !is.na(sensordata$infectionrisk2)])
-
-summary(sensordata$infectionrisk2[sensordata$Month=="Winter" & sensordata$`Day Type`=="Anchor"])
-sd(sensordata$infectionrisk2[sensordata$Month=="Winter" & sensordata$`Day Type`=="Anchor"])
-summary(sensordata$infectionrisk2[sensordata$Month=="Winter" & sensordata$`Day Type`=="Hybrid"])
-sd(sensordata$infectionrisk2[sensordata$Month=="Winter" & sensordata$`Day Type`=="Hybrid" & !is.na(sensordata$infectionrisk2)])
+#Figure 3
+windows()
+ggarrange(A,B,common.legend = TRUE,ncol=1)
 
 
-#summary statistics of f----------------------------------------
-
-summary(sensordata$f[sensordata$Month=="Summer" & sensordata$`Day Type`=="Anchor"])
-summary(sensordata$f[sensordata$Month=="Summer" & sensordata$`Day Type`=="Hybrid"])
-
-summary(sensordata$f[sensordata$Month=="Spring" & sensordata$`Day Type`=="Anchor"])
-summary(sensordata$f[sensordata$Month=="Spring" & sensordata$`Day Type`=="Hybrid"])
-
-summary(sensordata$f[sensordata$Month=="Winter" & sensordata$`Day Type`=="Anchor"])
-summary(sensordata$f[sensordata$Month=="Winter" & sensordata$`Day Type`=="Hybrid"])
-
-summary(sensordata$f[sensordata$Month=="Fall" & sensordata$`Day Type`=="Anchor"])
-summary(sensordata$f[sensordata$Month=="Fall" & sensordata$`Day Type`=="Hybrid"])
-
-#What would CO2 be if we assumed 1 ACH------------------------------
-anchor<-1141 #(50 people)
-peopleanchor<-50
-hybrid<-444 #(3 people)
-peoplehybrid<-3
-
-#used: https://forhealth.org/tools/co2-calculator/
-
-#calculating f (from Rudnick & Milton) per time point per sensor
-anchorf<-(anchor-C.0)/1000000/C.a
-hybridf<-(hybrid-C.0)/1000000/C.a
-
-
-anchorrisk<-1-exp(-anchorf*I*q*t/peopleanchor)
-hybridrisk<-1-exp(-hybridf*I*q*t/peoplehybrid)
-
-anchorrisk-hybridrisk
-
-#Statistical models
+#Statistical models----------------------------------------------------
 
 maxs<-rep(NA,length(table(sensordata$Day)))
 means<-rep(NA,length(table(sensordata$Day)))
@@ -146,23 +138,24 @@ ntotal<-rep(NA,length(table(sensordata$Day)))
 days<-unique(sensordata$Day)
 
 for (i in 1:length(maxs)){
-  maxs[i]<-max(sensordata$`Sensor 2 CO2`[sensordata$Day==days[i]])
-  means[i]<-mean(sensordata$`Sensor 2 CO2`[sensordata$Day==days[i]])
+  maxs[i]<-max(sensordata$co2average[sensordata$Day==days[i]])
+  means[i]<-mean(sensordata$co2average[sensordata$Day==days[i]])
   month[i]<-sensordata$Month[sensordata$Day==days[i]][1]
   ntotal[i]<-sensordata$n[sensordata$Day==days[i]][1]
 }
 
 frame.all<-data.frame(maxs,means,month,ntotal)
-  
+
+#model 2  
 sensormodel1<-lm(means~month + ntotal,frame.all)
 summary(sensormodel1)
 
-windows()
-ggplot(frame.all,aes(x=month,y=means))+
-  geom_point()+
-  stat_smooth(method = "lm", 
-              formula = y ~ x, 
-              geom = "smooth") 
+#windows()
+#ggplot(frame.all,aes(x=month,y=means))+
+#  geom_point()+
+#  stat_smooth(method = "lm", 
+#              formula = y ~ x, 
+#              geom = "smooth") 
 
 
 sensormodel2<-lm(maxs~month + ntotal,frame.all)
