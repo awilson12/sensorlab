@@ -99,6 +99,9 @@ ggplot(frame.plot.airborne)+geom_point(aes(color=season,x=date.type,y=infect))+
         legend.position="none",
         strip.text = element_text(size=13),legend.text = element_text(size=13))
 
+ggsave ("figure4.tiff", unit="in", width = 7, height = 9, dpi = 600)
+
+
 #summary of risk reductions
 
 #Fall
