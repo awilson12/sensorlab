@@ -185,6 +185,8 @@ ggplot(data=sensordata[sensordata$`Day Type`!="None",],aes(x=Time,y=sensordata$a
   theme(axis.text.x=element_text(angle=90),axis.title = element_text(size=13),
         axis.text=element_text(size=13),strip.text = element_text(size=13))
 
+ggsave ("figure2.tiff", unit="in", width = 9, height = 6, dpi = 600)
+
 
 #Statistical models---------------------------------------------------------
 
