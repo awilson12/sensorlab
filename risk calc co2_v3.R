@@ -90,87 +90,178 @@ endlunch<-as.POSIXct("1899-12-31 1:30:00")
 
 windows()
 ggplot(frame.plot.airborne)+geom_point(aes(color=season,x=date.type,y=infect))+
-  geom_boxplot(aes(color=season,x=date.type,y=infect),alpha=0.2)+
+  geom_violin(aes(color=season,x=date.type,y=infect),alpha=0.2)+
   facet_grid(season~case)+scale_y_continuous(trans="log10",name="Infection Risk")+
   scale_x_discrete(name="")+
   scale_color_discrete(name="")+
-  theme_pubr()+
+  theme_pubclean()+
   theme(axis.text=element_text(size=13),axis.title=element_text(size=13),
         legend.position="none",
         strip.text = element_text(size=13),legend.text = element_text(size=13))
 
+
 ggsave ("figure4.tiff", unit="in", width = 7, height = 9, dpi = 600)
+
+
+#summary of infection risks---------------------------
+
+#Case 1
+summary(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 1" & frame.plot.airborne$season=="Fall - Oct 2023" & frame.plot.airborne$date.type=="Anchor"])
+sd(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 1" & frame.plot.airborne$season=="Fall - Oct 2023" & frame.plot.airborne$date.type=="Anchor"])
+
+summary(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 1" & frame.plot.airborne$season=="Fall - Oct 2023" & frame.plot.airborne$date.type=="Hybrid"])
+sd(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 1" & frame.plot.airborne$season=="Fall - Oct 2023" & frame.plot.airborne$date.type=="Hybrid"])
+
+summary(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 1" & frame.plot.airborne$season=="Spring - Apr 2023" & frame.plot.airborne$date.type=="Anchor"])
+sd(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 1" & frame.plot.airborne$season=="Spring - Apr 2023" & frame.plot.airborne$date.type=="Anchor"])
+
+summary(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 1" & frame.plot.airborne$season=="Spring - Apr 2023" & frame.plot.airborne$date.type=="Hybrid"])
+sd(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 1" & frame.plot.airborne$season=="Spring - Apr 2023" & frame.plot.airborne$date.type=="Hybrid"])
+
+summary(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 1" & frame.plot.airborne$season=="Winter - Feb 2024" & frame.plot.airborne$date.type=="Anchor"])
+sd(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 1" & frame.plot.airborne$season=="Winter - Feb 2024" & frame.plot.airborne$date.type=="Anchor"])
+
+summary(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 1" & frame.plot.airborne$season=="Winter - Feb 2024" & frame.plot.airborne$date.type=="Hybrid"])
+sd(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 1" & frame.plot.airborne$season=="Winter - Feb 2024" & frame.plot.airborne$date.type=="Hybrid"])
+
+summary(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 1" & frame.plot.airborne$season=="Summer - Aug 2023" & frame.plot.airborne$date.type=="Anchor"])
+sd(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 1" & frame.plot.airborne$season=="Summer - Aug 2023" & frame.plot.airborne$date.type=="Anchor"])
+
+summary(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 1" & frame.plot.airborne$season=="Summer - Aug 2023" & frame.plot.airborne$date.type=="Hybrid"])
+sd(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 1" & frame.plot.airborne$season=="Summer - Aug 2023" & frame.plot.airborne$date.type=="Hybrid"])
+
+#Case 2
+summary(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 2" & frame.plot.airborne$season=="Fall - Oct 2023" & frame.plot.airborne$date.type=="Anchor"])
+sd(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 2" & frame.plot.airborne$season=="Fall - Oct 2023" & frame.plot.airborne$date.type=="Anchor"])
+
+summary(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 2" & frame.plot.airborne$season=="Fall - Oct 2023" & frame.plot.airborne$date.type=="Hybrid"])
+sd(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 2" & frame.plot.airborne$season=="Fall - Oct 2023" & frame.plot.airborne$date.type=="Hybrid"])
+
+summary(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 2" & frame.plot.airborne$season=="Spring - Apr 2023" & frame.plot.airborne$date.type=="Anchor"])
+sd(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 2" & frame.plot.airborne$season=="Spring - Apr 2023" & frame.plot.airborne$date.type=="Anchor"])
+
+summary(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 2" & frame.plot.airborne$season=="Spring - Apr 2023" & frame.plot.airborne$date.type=="Hybrid"])
+sd(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 2" & frame.plot.airborne$season=="Spring - Apr 2023" & frame.plot.airborne$date.type=="Hybrid"])
+
+summary(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 2" & frame.plot.airborne$season=="Winter - Feb 2024" & frame.plot.airborne$date.type=="Anchor"])
+sd(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 2" & frame.plot.airborne$season=="Winter - Feb 2024" & frame.plot.airborne$date.type=="Anchor"])
+
+summary(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 2" & frame.plot.airborne$season=="Winter - Feb 2024" & frame.plot.airborne$date.type=="Hybrid"])
+sd(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 2" & frame.plot.airborne$season=="Winter - Feb 2024" & frame.plot.airborne$date.type=="Hybrid"])
+
+summary(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 2" & frame.plot.airborne$season=="Summer - Aug 2023" & frame.plot.airborne$date.type=="Anchor"])
+sd(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 2" & frame.plot.airborne$season=="Summer - Aug 2023" & frame.plot.airborne$date.type=="Anchor"])
+
+summary(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 2" & frame.plot.airborne$season=="Summer - Aug 2023" & frame.plot.airborne$date.type=="Hybrid"])
+sd(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 2" & frame.plot.airborne$season=="Summer - Aug 2023" & frame.plot.airborne$date.type=="Hybrid"])
+
+
+#Case 3
+summary(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 3" & frame.plot.airborne$season=="Fall - Oct 2023" & frame.plot.airborne$date.type=="Anchor"])
+sd(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 3" & frame.plot.airborne$season=="Fall - Oct 2023" & frame.plot.airborne$date.type=="Anchor"])
+
+summary(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 3" & frame.plot.airborne$season=="Fall - Oct 2023" & frame.plot.airborne$date.type=="Hybrid"])
+sd(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 3" & frame.plot.airborne$season=="Fall - Oct 2023" & frame.plot.airborne$date.type=="Hybrid"])
+
+summary(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 3" & frame.plot.airborne$season=="Spring - Apr 2023" & frame.plot.airborne$date.type=="Anchor"])
+sd(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 3" & frame.plot.airborne$season=="Spring - Apr 2023" & frame.plot.airborne$date.type=="Anchor"])
+
+summary(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 3" & frame.plot.airborne$season=="Spring - Apr 2023" & frame.plot.airborne$date.type=="Hybrid"])
+sd(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 3" & frame.plot.airborne$season=="Spring - Apr 2023" & frame.plot.airborne$date.type=="Hybrid"])
+
+summary(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 3" & frame.plot.airborne$season=="Winter - Feb 2024" & frame.plot.airborne$date.type=="Anchor"])
+sd(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 3" & frame.plot.airborne$season=="Winter - Feb 2024" & frame.plot.airborne$date.type=="Anchor"])
+
+summary(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 3" & frame.plot.airborne$season=="Winter - Feb 2024" & frame.plot.airborne$date.type=="Hybrid"])
+sd(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 3" & frame.plot.airborne$season=="Winter - Feb 2024" & frame.plot.airborne$date.type=="Hybrid"])
+
+summary(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 3" & frame.plot.airborne$season=="Summer - Aug 2023" & frame.plot.airborne$date.type=="Anchor"])
+sd(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 3" & frame.plot.airborne$season=="Summer - Aug 2023" & frame.plot.airborne$date.type=="Anchor"])
+
+summary(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 3" & frame.plot.airborne$season=="Summer - Aug 2023" & frame.plot.airborne$date.type=="Hybrid"])
+sd(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 3" & frame.plot.airborne$season=="Summer - Aug 2023" & frame.plot.airborne$date.type=="Hybrid"])
+
+
+#Case 4
+summary(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 4" & frame.plot.airborne$season=="Fall - Oct 2023" & frame.plot.airborne$date.type=="Anchor"])
+sd(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 4" & frame.plot.airborne$season=="Fall - Oct 2023" & frame.plot.airborne$date.type=="Anchor"])
+
+summary(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 4" & frame.plot.airborne$season=="Fall - Oct 2023" & frame.plot.airborne$date.type=="Hybrid"])
+sd(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 4" & frame.plot.airborne$season=="Fall - Oct 2023" & frame.plot.airborne$date.type=="Hybrid"])
+
+summary(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 4" & frame.plot.airborne$season=="Spring - Apr 2023" & frame.plot.airborne$date.type=="Anchor"])
+sd(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 4" & frame.plot.airborne$season=="Spring - Apr 2023" & frame.plot.airborne$date.type=="Anchor"])
+
+summary(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 4" & frame.plot.airborne$season=="Spring - Apr 2023" & frame.plot.airborne$date.type=="Hybrid"])
+sd(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 4" & frame.plot.airborne$season=="Spring - Apr 2023" & frame.plot.airborne$date.type=="Hybrid"])
+
+summary(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 4" & frame.plot.airborne$season=="Winter - Feb 2024" & frame.plot.airborne$date.type=="Anchor"])
+sd(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 4" & frame.plot.airborne$season=="Winter - Feb 2024" & frame.plot.airborne$date.type=="Anchor"])
+
+summary(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 4" & frame.plot.airborne$season=="Winter - Feb 2024" & frame.plot.airborne$date.type=="Hybrid"])
+sd(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 4" & frame.plot.airborne$season=="Winter - Feb 2024" & frame.plot.airborne$date.type=="Hybrid"])
+
+summary(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 4" & frame.plot.airborne$season=="Summer - Aug 2023" & frame.plot.airborne$date.type=="Anchor"])
+sd(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 4" & frame.plot.airborne$season=="Summer - Aug 2023" & frame.plot.airborne$date.type=="Anchor"])
+
+summary(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 4" & frame.plot.airborne$season=="Summer - Aug 2023" & frame.plot.airborne$date.type=="Hybrid"])
+sd(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 4" & frame.plot.airborne$season=="Summer - Aug 2023" & frame.plot.airborne$date.type=="Hybrid"])
+
 
 
 #summary of risk reductions
 
 #Fall
 (mean(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 1" & frame.plot.airborne$season=="Fall - Oct 2023" & frame.plot.airborne$date.type=="Anchor"])-
-  mean(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 1" & frame.plot.airborne$season=="Fall - Oct 2023" & frame.plot.airborne$date.type=="Hybrid"]))/
-  mean(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 1" & frame.plot.airborne$season=="Fall - Oct 2023" & frame.plot.airborne$date.type=="Anchor"])*100
+  mean(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 1" & frame.plot.airborne$season=="Fall - Oct 2023" & frame.plot.airborne$date.type=="Hybrid"]))
 
 (mean(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 2" & frame.plot.airborne$season=="Fall - Oct 2023" & frame.plot.airborne$date.type=="Anchor"])-
-  mean(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 2" & frame.plot.airborne$season=="Fall - Oct 2023" & frame.plot.airborne$date.type=="Hybrid"]))/
-  mean(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 2" & frame.plot.airborne$season=="Fall - Oct 2023" & frame.plot.airborne$date.type=="Anchor"])*100
+  mean(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 2" & frame.plot.airborne$season=="Fall - Oct 2023" & frame.plot.airborne$date.type=="Hybrid"]))
 
 (mean(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 3" & frame.plot.airborne$season=="Fall - Oct 2023" & frame.plot.airborne$date.type=="Anchor"])-
-  mean(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 3" & frame.plot.airborne$season=="Fall - Oct 2023" & frame.plot.airborne$date.type=="Hybrid"]))/
-  mean(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 3" & frame.plot.airborne$season=="Fall - Oct 2023" & frame.plot.airborne$date.type=="Anchor"])*100
+  mean(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 3" & frame.plot.airborne$season=="Fall - Oct 2023" & frame.plot.airborne$date.type=="Hybrid"]))
 
 (mean(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 4" & frame.plot.airborne$season=="Fall - Oct 2023" & frame.plot.airborne$date.type=="Anchor"])-
-    mean(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 4" & frame.plot.airborne$season=="Fall - Oct 2023" & frame.plot.airborne$date.type=="Hybrid"]))/
-  mean(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 4" & frame.plot.airborne$season=="Fall - Oct 2023" & frame.plot.airborne$date.type=="Anchor"])*100
+    mean(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 4" & frame.plot.airborne$season=="Fall - Oct 2023" & frame.plot.airborne$date.type=="Hybrid"]))
 
 #Spring
 (mean(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 1" & frame.plot.airborne$season=="Spring - Apr 2023" & frame.plot.airborne$date.type=="Anchor"])-
-    mean(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 1" & frame.plot.airborne$season=="Spring - Apr 2023" & frame.plot.airborne$date.type=="Hybrid"]))/
-  mean(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 1" & frame.plot.airborne$season=="Spring - Apr 2023" & frame.plot.airborne$date.type=="Anchor"])*100
+    mean(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 1" & frame.plot.airborne$season=="Spring - Apr 2023" & frame.plot.airborne$date.type=="Hybrid"]))
 
 (mean(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 2" & frame.plot.airborne$season=="Spring - Apr 2023" & frame.plot.airborne$date.type=="Anchor"])-
-    mean(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 2" & frame.plot.airborne$season=="Spring - Apr 2023" & frame.plot.airborne$date.type=="Hybrid"]))/
-  mean(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 2" & frame.plot.airborne$season=="Spring - Apr 2023" & frame.plot.airborne$date.type=="Anchor"])*100
+    mean(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 2" & frame.plot.airborne$season=="Spring - Apr 2023" & frame.plot.airborne$date.type=="Hybrid"]))
 
 (mean(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 3" & frame.plot.airborne$season=="Spring - Apr 2023" & frame.plot.airborne$date.type=="Anchor"])-
-    mean(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 3" & frame.plot.airborne$season=="Spring - Apr 2023" & frame.plot.airborne$date.type=="Hybrid"]))/
-  mean(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 3" & frame.plot.airborne$season=="Spring - Apr 2023" & frame.plot.airborne$date.type=="Anchor"])*100
+    mean(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 3" & frame.plot.airborne$season=="Spring - Apr 2023" & frame.plot.airborne$date.type=="Hybrid"]))
 
 (mean(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 4" & frame.plot.airborne$season=="Spring - Apr 2023" & frame.plot.airborne$date.type=="Anchor"])-
-    mean(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 4" & frame.plot.airborne$season=="Spring - Apr 2023" & frame.plot.airborne$date.type=="Hybrid"]))/
-  mean(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 4" & frame.plot.airborne$season=="Spring - Apr 2023" & frame.plot.airborne$date.type=="Anchor"])*100
+    mean(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 4" & frame.plot.airborne$season=="Spring - Apr 2023" & frame.plot.airborne$date.type=="Hybrid"]))
 
 #Winter
 (mean(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 1" & frame.plot.airborne$season=="Winter - Feb 2024" & frame.plot.airborne$date.type=="Anchor"])-
-    mean(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 1" & frame.plot.airborne$season=="Winter - Feb 2024" & frame.plot.airborne$date.type=="Hybrid"]))/
-  mean(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 1" & frame.plot.airborne$season=="Winter - Feb 2024" & frame.plot.airborne$date.type=="Anchor"])*100
+    mean(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 1" & frame.plot.airborne$season=="Winter - Feb 2024" & frame.plot.airborne$date.type=="Hybrid"]))
 
 (mean(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 2" & frame.plot.airborne$season=="Winter - Feb 2024" & frame.plot.airborne$date.type=="Anchor"])-
-    mean(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 2" & frame.plot.airborne$season=="Winter - Feb 2024" & frame.plot.airborne$date.type=="Hybrid"]))/
-  mean(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 2" & frame.plot.airborne$season=="Winter - Feb 2024" & frame.plot.airborne$date.type=="Anchor"])*100
+    mean(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 2" & frame.plot.airborne$season=="Winter - Feb 2024" & frame.plot.airborne$date.type=="Hybrid"]))
 
 (mean(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 3" & frame.plot.airborne$season=="Winter - Feb 2024" & frame.plot.airborne$date.type=="Anchor"])-
-    mean(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 3" & frame.plot.airborne$season=="Winter - Feb 2024" & frame.plot.airborne$date.type=="Hybrid"]))/
-  mean(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 3" & frame.plot.airborne$season=="Winter - Feb 2024" & frame.plot.airborne$date.type=="Anchor"])*100
+    mean(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 3" & frame.plot.airborne$season=="Winter - Feb 2024" & frame.plot.airborne$date.type=="Hybrid"]))
 
 (mean(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 4" & frame.plot.airborne$season=="Winter - Feb 2024" & frame.plot.airborne$date.type=="Anchor"])-
-    mean(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 4" & frame.plot.airborne$season=="Winter - Feb 2024" & frame.plot.airborne$date.type=="Hybrid"]))/
-  mean(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 4" & frame.plot.airborne$season=="Winter - Feb 2024" & frame.plot.airborne$date.type=="Anchor"])*100
+    mean(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 4" & frame.plot.airborne$season=="Winter - Feb 2024" & frame.plot.airborne$date.type=="Hybrid"]))
 
 #Summer
 (mean(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 1" & frame.plot.airborne$season=="Summer - Aug 2023" & frame.plot.airborne$date.type=="Anchor"])-
-    mean(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 1" & frame.plot.airborne$season=="Summer - Aug 2023" & frame.plot.airborne$date.type=="Hybrid"]))/
-  mean(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 1" & frame.plot.airborne$season=="Summer - Aug 2023" & frame.plot.airborne$date.type=="Anchor"])*100
+    mean(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 1" & frame.plot.airborne$season=="Summer - Aug 2023" & frame.plot.airborne$date.type=="Hybrid"]))
 
 (mean(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 2" & frame.plot.airborne$season=="Summer - Aug 2023" & frame.plot.airborne$date.type=="Anchor"])-
-    mean(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 2" & frame.plot.airborne$season=="Summer - Aug 2023" & frame.plot.airborne$date.type=="Hybrid"]))/
-  mean(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 2" & frame.plot.airborne$season=="Summer - Aug 2023" & frame.plot.airborne$date.type=="Anchor"])*100
+    mean(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 2" & frame.plot.airborne$season=="Summer - Aug 2023" & frame.plot.airborne$date.type=="Hybrid"]))
 
 (mean(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 3" & frame.plot.airborne$season=="Summer - Aug 2023" & frame.plot.airborne$date.type=="Anchor"])-
-    mean(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 3" & frame.plot.airborne$season=="Summer - Aug 2023" & frame.plot.airborne$date.type=="Hybrid"]))/
-  mean(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 3" & frame.plot.airborne$season=="Summer - Aug 2023" & frame.plot.airborne$date.type=="Anchor"])*100
+    mean(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 3" & frame.plot.airborne$season=="Summer - Aug 2023" & frame.plot.airborne$date.type=="Hybrid"]))
 
 (mean(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 4" & frame.plot.airborne$season=="Summer - Aug 2023" & frame.plot.airborne$date.type=="Anchor"])-
-    mean(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 4" & frame.plot.airborne$season=="Summer - Aug 2023" & frame.plot.airborne$date.type=="Hybrid"]))/
-  mean(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 4" & frame.plot.airborne$season=="Summer - Aug 2023" & frame.plot.airborne$date.type=="Anchor"])*100
+    mean(frame.plot.airborne$infect[frame.plot.airborne$case=="Case 4" & frame.plot.airborne$season=="Summer - Aug 2023" & frame.plot.airborne$date.type=="Hybrid"]))
 
 #-----------------co2 figure----------------------------------------------
 
@@ -208,18 +299,18 @@ for (i in 1:length(maxs)){
 
 frame.all<-data.frame(maxs,means,month,ntotal,daytype)
   
-sensormodel1<-lm(means~month + ntotal,frame.all)
+sensormodel1<-lm(means~factor(month) + ntotal,frame.all)
 summary(sensormodel1)
 
-sensormodel2<-lm(maxs~month + ntotal,frame.all)
+sensormodel2<-lm(maxs~factor(month) + ntotal,frame.all)
 summary(sensormodel2)
 
-sensormodel3<-lm(means~month + daytype,frame.all)
+sensormodel3<-lm(means~factor(month) + daytype,frame.all)
 summary(sensormodel3)
 
-sensormodel4<-lm(maxs~month + daytype,frame.all)
+sensormodel4<-lm(maxs~factor(month) + daytype,frame.all)
 summary(sensormodel4)
 
-sensormodel5<-lm(ntotal~month + daytype,frame.all)
+sensormodel5<-lm(ntotal~factor(month) + daytype,frame.all)
 summary(sensormodel5)
 
